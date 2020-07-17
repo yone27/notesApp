@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://yoneiker123:yoneiker123@cluster0.bqvtk.mongodb.net/noteapp', {
+
+mongoose.connect('mongodb+srv://yoneiker:yoneiker@cluster0-t41nx.mongodb.net/noteapp', {
         useCreateIndex: true,
         useNewUrlParser: true,
         useFindAndModify: false
