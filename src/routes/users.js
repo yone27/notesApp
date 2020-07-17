@@ -13,7 +13,7 @@ router.post('/signin', passport.authenticate('local', {
 router.get('/signup', (req, res) => {
     res.render('users/signup')
 })
-router.post('/signup', async (req, res) => {
+router.post('/signup', async(req, res) => {
     const { name, email, password, passwordConfirm } = req.body;
     const errors = [];
 
@@ -34,13 +34,14 @@ router.post('/signup', async (req, res) => {
         if (emailUser) {
             req.flash('errorMsg', 'the email is aleady in use');
             res.redirect('/users/signup');
+        } else {
+            const newUser = new User({ name, email, password });
+            // contraseña cifrada
+            newUser.password = await newUser.encryptPassword(password);
+            await newUser.save();
+            req.flash('successMsg', 'You are registered');
+            res.redirect('/users/signin');
         }
-        const newUser = new User({ name, email, password });
-        // contraseña cifrada
-        newUser.password = await newUser.encryptPassword(password);
-        await newUser.save();
-        req.flash('successMsg', 'You are registered');
-        res.redirect('/users/signin');
     }
 })
 router.get('/logout', (req, res) => {
